@@ -26,4 +26,9 @@ public class JMC : MonoBehaviour
         float change = _score2 - _score2;
         return change / _score1 * 100;
     }
+
+    public Color RandomColor()
+    {
+        return new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f,1f));
+    }
 }
