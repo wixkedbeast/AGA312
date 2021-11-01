@@ -12,9 +12,20 @@ public class ThirdPersonMovement : MonoBehaviour
 
     public Vector3 collision = Vector3.zero;
 
+   
+
     // Update is called once per frame
 
-  
+    CharacterController charCtrl;
+
+    void Start()
+    {
+        charCtrl = GetComponent<CharacterController>();
+        
+    }
+
+   
+
     void Update()
     {
         if(Input.GetMouseButtonDown(0)) //allows interaction
@@ -25,13 +36,17 @@ public class ThirdPersonMovement : MonoBehaviour
             {
 
                 Debug.Log(hit.transform.name);
-                if (hit.transform.name == "Soil")
+                if (hit.transform.name == "Mine")
                 {
                    //allows player to raycast to see if there is soil 
                 }
             }
             
         }
+
+       
+
+        
         
         
 
@@ -51,5 +66,7 @@ public class ThirdPersonMovement : MonoBehaviour
 
        
     }
+
+    
     
 }
