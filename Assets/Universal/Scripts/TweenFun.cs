@@ -16,12 +16,15 @@ public class TweenFun : JMC
     {
         if (Input.GetKeyDown(KeyCode.UpArrow))
             TweenPosition(MoveDirection.Up);
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
             TweenPosition(MoveDirection.Down);
+
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-            TweenPosition(MoveDirection.Down);
+            TweenPosition(MoveDirection.Left);
+
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            TweenPosition(MoveDirection.Down);
+            TweenPosition(MoveDirection.Right);
     }
 
     void TweenPosition(MoveDirection dir)
@@ -36,10 +39,10 @@ public class TweenFun : JMC
                 player.transform.DOLocalMoveZ(current.z + 5, tweenTime).SetEase(movementEase).OnComplete(()=>canMove = true);
                 break;
             case MoveDirection.Down:
-                player.transform.DOLocalMoveZ(current.z + 5, tweenTime).SetEase(movementEase).OnComplete(() => canMove = true);
+                player.transform.DOLocalMoveZ(current.z - 5, tweenTime).SetEase(movementEase).OnComplete(() => canMove = true);
                 break;
             case MoveDirection.Left:
-                player.transform.DOLocalMoveX(current.x + 5, tweenTime).SetEase(movementEase).OnComplete(() => canMove = true);
+                player.transform.DOLocalMoveX(current.x - 5, tweenTime).SetEase(movementEase).OnComplete(() => canMove = true);
                 break;
             case MoveDirection.Right:
                 player.transform.DOLocalMoveX(current.x + 5, tweenTime).SetEase(movementEase).OnComplete(() => canMove = true);

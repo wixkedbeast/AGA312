@@ -1401,7 +1401,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7919406af234144bb429a2687f084d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 1836574969}
   player: {fileID: 763963248}
   movementEase: 29
   tweenTime: 1
