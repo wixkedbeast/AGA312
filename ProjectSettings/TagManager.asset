@@ -7,6 +7,8 @@ TagManager:
   - Powerup
   - Enemy
   - Land Mine
+  - Oven
+  - Pizza
   layers:
   - Default
   - TransparentFX

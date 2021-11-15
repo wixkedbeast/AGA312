@@ -23,7 +23,7 @@ public class PivotRotation : MonoBehaviour
         Quaternion deltaRotation = Quaternion.Euler(m_EulerAngleVelocity * Time.fixedDeltaTime);
         m_Rigidbody.MoveRotation(m_Rigidbody.rotation * deltaRotation);
 
-        p_EulerAngleVelocity = new Vector3(y, 0, 0);
+        p_EulerAngleVelocity = new Vector3(0, y, 0);
         Quaternion delta = Quaternion.Euler(p_EulerAngleVelocity * Time.fixedDeltaTime);
         p_Rigidbody.MoveRotation(p_Rigidbody.rotation * delta);
     }
