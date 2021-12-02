@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class EquationsGenerator : MonoBehaviour {
+public class EquationsGenerator : Singleton<EquationsGenerator> {
 
     [Header("UI")]
     public TMP_Text numberOneText;
@@ -21,9 +21,26 @@ public class EquationsGenerator : MonoBehaviour {
     
     public List<int> dummyAnswers;
 
+    public GameObject plate1;
+    public GameObject plate2;
+    public GameObject plate3;
+    TMP_Text plate1Text;
+    TMP_Text plate2Text;
+    TMP_Text plate3Text;
+    public int myScore = 50;
+    int roundNumber = 0;
+    float roundSpeed = 7;
+    bool playerCorrect;
+    public GameObject messagePanel;
+
     void Start()
     {
-        GenerateRandomEquation();
+        plate1Text = plate1.GetComponentInChildren<TMP_Text>();
+        plate2Text = plate2.GetComponentInChildren<TMP_Text>();
+        plate3Text = plate3.GetComponentInChildren<TMP_Text>();
+        //GenerateRandomEquation();
+        StartCoroutine(LaunchPlates());
+        
     }
     
 	void Update ()
@@ -67,10 +84,11 @@ public class EquationsGenerator : MonoBehaviour {
     void GenerateMultiplication()
     {
         GenerateNumbers();
-        operatorText.text = "*";
+        operatorText.text = "x";
         correctAnswer = numberOne * numberTwo;
         Debug.Log(numberOne + " x " + numberTwo + " = " + correctAnswer);
-        GenerateDummyAnswers(); 
+        GenerateDummyAnswers();
+        plate1Text.text = correctAnswer.ToString();
     }
 
     void GenerateAddition()
@@ -80,6 +98,7 @@ public class EquationsGenerator : MonoBehaviour {
         correctAnswer = numberOne + numberTwo;
         Debug.Log(numberOne + " + " + numberTwo + " = " + correctAnswer);
         GenerateDummyAnswers();
+        plate1Text.text = correctAnswer.ToString();
     }
 
     void GenerateSubtraction()
@@ -89,6 +108,7 @@ public class EquationsGenerator : MonoBehaviour {
         correctAnswer = numberOne - numberTwo;
         Debug.Log(numberOne + " - " + numberTwo + " = " + correctAnswer);
         GenerateDummyAnswers();
+        plate1Text.text = correctAnswer.ToString();
     }
 
     void GenerateDivision()
@@ -99,6 +119,7 @@ public class EquationsGenerator : MonoBehaviour {
         correctAnswer = Mathf.RoundToInt(correctAnswer);
         Debug.Log(numberOne + " / " + numberTwo + " = " + correctAnswer);
         GenerateDummyAnswers();
+        plate1Text.text = correctAnswer.ToString();
     }
 
     /// <summary>
@@ -135,15 +156,20 @@ public class EquationsGenerator : MonoBehaviour {
             while (dummy == correctAnswer || dummyAnswers.Contains(dummy));
             dummyAnswers[i] = dummy;
             Debug.Log("Dummy answer: " + dummyAnswers[i]);
+            
+
         }
+        plate2Text.text = dummyAnswers[0].ToString();
+        plate3Text.text = dummyAnswers[1].ToString();
     }
 
-    public void CheckAnswer(string _answer)
+    public void CheckAnswer(bool _answer)
     {
-        if (_answer == correctAnswer.ToString())
+        if (_answer)
         {
             message.text = "Correct!";
             message.color = Color.yellow;
+            ScoringSystem.instance.AddScore(myScore);
             
 
         }
@@ -151,11 +177,46 @@ public class EquationsGenerator : MonoBehaviour {
         {
             message.text = "Wrong!";
             message.color = Color.red;
+            
         }
+        
+        
+
+    }
+    public void SetAnswer(bool _correct)
+    {
+        if(_correct)
+        {
+            //Add to score
+            playerCorrect = true;  
+        }
+    }
+    IEnumerator LaunchPlates()
+    {
+        playerCorrect = false;
         GenerateRandomEquation();
-        answersField.text = "";
+        plate1.SetActive(true);
+        plate2.SetActive(true);
+        plate3.SetActive(true);
+        //Set plates to a random start pos 
+        //add force in an upwards direction
+        //round
+        yield return new WaitForSeconds(roundSpeed);
 
+        CheckAnswer(playerCorrect);
+        yield return new WaitForSeconds(2);
+        
+        //answersField.text = "";
+        if(roundNumber != 10)
+        {
+            roundNumber++;
+            StartCoroutine(LaunchPlates());
+        }
+        else
+        {
+            //increment the set and then reset the round number and increment the force and speed 
 
-
+        }
+        
     }
 }

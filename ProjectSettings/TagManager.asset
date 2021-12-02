@@ -9,6 +9,7 @@ TagManager:
   - Land Mine
   - Oven
   - Pizza
+  - Crosshair
   layers:
   - Default
   - TransparentFX
