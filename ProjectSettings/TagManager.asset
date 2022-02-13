@@ -10,6 +10,8 @@ TagManager:
   - Oven
   - Pizza
   - Crosshair
+  - Ground
+  - Checkpoint
   layers:
   - Default
   - TransparentFX

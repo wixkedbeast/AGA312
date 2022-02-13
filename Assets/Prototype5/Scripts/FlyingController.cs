@@ -13,11 +13,24 @@ public class FlyingController : Singleton<FlyingController>
 
     private float rollInput;
     public float rollSpeed = 90f, rollAcceleration = 3.5f;
+
+    Rigidbody rb;
+    public int score = 0;
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         screenCenter.x = Screen.width * .5f;
         screenCenter.y = Screen.height * .5f;
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.tag == "Checkpoint")
+        {
+            Destroy(other.gameObject);
+        }
     }
 
     // Update is called once per frame
